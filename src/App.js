@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import TodoList from './components/todoList';
 import './App.css';
+
 
 /*
 Creamos una lista con cada una de las tareas a realizar. ✔
@@ -41,35 +43,6 @@ class App extends Component {
     );
   }
 
-  renderTodos = () => {
-    return this.state.todos.map((todo, index) => {
-      return(
-        <li key={ todo.title }>
-          <span
-            className={`task ${todo.completed ? "completed" : ""}`}>
-              { todo.title }
-          </span>
-          <span
-            className="icon-task"
-            role="img"
-            aria-label="emoji"
-            onClick={ this.toggleTodo }
-            data-index={ index }>
-              🆗
-          </span>
-          <span
-            className="icon-task"
-            role="img"
-            aria-label="emoji"
-            onClick={ this.deleteTodo }
-            data-index={ index }>
-              ❌
-          </span>
-        </li>
-      )
-    });
-  }
-
   submitHandler = (e) => {
     e.preventDefault();
     const newTodo = {
@@ -83,13 +56,16 @@ class App extends Component {
   }
 
   render() {
-    const renderedTodos = this.renderTodos();
     return (
       <div className="app">
         <div className="container">
           <h1 className="title">Lista de Tareas</h1>
           <ul>
-            { renderedTodos }
+            { <TodoList
+              todos={this.state.todos}
+              toggleTodo={this.toggleTodo}
+              deleteTodo={this.deleteTodo}/>
+            }
           </ul>
           <form onSubmit={ this.submitHandler }>
             <input
